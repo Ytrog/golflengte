@@ -79,14 +79,18 @@
   "Open menu for frequency calculation"
   (format t "~&In welke eenheid is de golflengte?")
   (options
-   (1 "Meters"  (ask "Golflengte: " frequency-from-wavelength "Frequency: ~g hertz~%"))))
+   (1 "Meters"  (ask "Golflengte (m): " frequency-from-wavelength "Frequency: ~g hertz~%"))
+   (2 "mm" (ask "Golflengte (mm): "
+		(lambda (x)
+		  (frequency-from-wavelength (/ x 1000)))
+		"Frequency: ~g hertz~%"))))
 
 
 (defun menu-wavelength ()
   "Open menu for wavelength calculation"
   (format t "~&In welke eenheid wil je de golflengte hebben?~%")
   (options
-   (1 "Meters" (ask "Frequency: " wavelength-from-frequency "Wavelenght: ~g meter~&"))))
+   (1 "Meters" (ask "Frequency: " wavelength-from-frequency "Wavelenght: ~g meter~%"))))
 
 (defun golflengte ()
   "Main menu of application"
