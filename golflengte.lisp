@@ -3,6 +3,16 @@
 
 					; the formula for frequency: F = c/lambda, where F is hertz, c is speed of light in m/s, and lambda is in meters
 
+					; type declarations
+
+(defun positive-number-p (number)
+  "Determine if the parameter is a positive number"
+  (and (numberp number)
+       (> number 0)))
+
+(deftype positive-number ()
+  `(satisfies positive-number-p))
+
 ; constants
 
 (defconstant +c+ 299792458 "The speed of light in a vacuum")
@@ -19,7 +29,7 @@
 
 (defun frequency-from-wavelength (lambda) ; todo use condition system
   "Calculate the frequency in hertz from wavelengt <lambda> in meters"
-  (declare (type (unsigned-byte 64) lambda))  
+  (declare (type (positive-number) lambda))  
   (when (zerop lambda) (error 'division-by-zero))
   (unless (plusp lambda) (error 'arithmetic-error :operation 'frequency-from-wavelength :operands `(,lambda)))
   (/ +c+ lambda))
@@ -28,7 +38,7 @@
   (format t "~& The frequency of light with a wavelength of ~d meters is ~d hertz" lambda (frequency-from-wavelength lambda)))
 
 (defun wavelength-from-frequency (freq)
-  (declare (type (unsigned-byte 64) freq))
+  (declare (type (positive-number) freq))
   (when (zerop freq) (error 'division-by-zero))
   (unless (plusp freq) (error 'arithmetic-error :operation 'wavelength-from-frequency :operands `(,freq)))
   "Calculate the wavelenght in meters from the frequency in hertz"
