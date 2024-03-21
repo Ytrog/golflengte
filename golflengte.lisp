@@ -86,11 +86,7 @@
   "Open menu for wavelength calculation"
   (format t "~&In welke eenheid wil je de golflengte hebben?~%")
   (options
-   (1 "Meters" (progn
-		 (format t "Frequency: ")
-		 (let* ((input (read-int))
-			(output (wavelength-from-frequency input)))
-		   (format t "Wavelenght: ~g meter~&" output))))))
+   (1 "Meters" (ask "Frequency: " wavelength-from-frequency "Wavelenght: ~g meter~&"))))
 
 (defun golflengte ()
   "Main menu of application"
