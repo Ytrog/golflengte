@@ -7,11 +7,11 @@
 ; https://google.github.io/styleguide/lispguide.xml
 
 					; type declarations
-
-(defun positive-real-p (number)
-  "Determine if the parameter is a positive number"
-  (and (realp number)
-       (> number 0)))
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (defun positive-real-p (number)
+    "Determine if the parameter is a positive number"
+    (and (realp number)
+	 (> number 0))))
 
 (deftype positive-real ()
   `(satisfies positive-real-p))
