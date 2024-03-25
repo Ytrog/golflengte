@@ -3,15 +3,18 @@
 
 					; the formula for frequency: F = c/lambda, where F is hertz, c is speed of light in m/s, and lambda is in meters
 
+					; Some helpful links: https://www.reddit.com/r/Common_Lisp/comments/1bk3xoq/is_this_a_good_use_of_the_type_system/
+; https://google.github.io/styleguide/lispguide.xml
+
 					; type declarations
 
-(defun positive-number-p (number)
+(defun positive-real-p (number)
   "Determine if the parameter is a positive number"
-  (and (numberp number)
+  (and (realp number)
        (> number 0)))
 
-(deftype positive-number ()
-  `(satisfies positive-number-p))
+(deftype positive-real ()
+  `(satisfies positive-real-p))
 
 ; constants
 
@@ -29,7 +32,8 @@
 
 (defun frequency-from-wavelength (lambda) ; todo use condition system
   "Calculate the frequency in hertz from wavelengt <lambda> in meters"
-  (declare (type (positive-number) lambda))  
+  ; (declare (type positive-real lambda)) ; seems to prevent (check-type ...) from working
+  (check-type lambda positive-real)
   (when (zerop lambda) (error 'division-by-zero))
   (unless (plusp lambda) (error 'arithmetic-error :operation 'frequency-from-wavelength :operands `(,lambda)))
   (/ +c+ lambda))
@@ -38,7 +42,7 @@
   (format t "~& The frequency of light with a wavelength of ~d meters is ~d hertz" lambda (frequency-from-wavelength lambda)))
 
 (defun wavelength-from-frequency (freq)
-  (declare (type (positive-number) freq))
+  (check-type freq positive-real)
   (when (zerop freq) (error 'division-by-zero))
   (unless (plusp freq) (error 'arithmetic-error :operation 'wavelength-from-frequency :operands `(,freq)))
   "Calculate the wavelenght in meters from the frequency in hertz"
