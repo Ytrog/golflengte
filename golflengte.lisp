@@ -30,7 +30,7 @@
 
 ; calculations
 
-(defun frequency-from-wavelength (lambda) ; todo use condition system
+(defun frequency-from-wavelength (lambda)
   "Calculate the frequency in hertz from wavelengt <lambda> in meters"
   ; (declare (type positive-real lambda)) ; seems to prevent (check-type ...) from working
   (check-type lambda positive-real)
